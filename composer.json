@@ -1,0 +1,31 @@
+{
+    "name": "symfony/acl-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony AclBundle",
+    "keywords": [],
+    "homepage": "https://symfony.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fabien Potencier",
+            "email": "fabien@symfony.com"
+        },
+        {
+            "name": "Symfony Community",
+            "homepage": "https://symfony.com/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.9",
+        "symfony/security-acl": "~2.8"
+    },
+    "autoload": {
+        "psr-4": { "Symfony\\Bundle\\AclBundle\\": "" }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.8-dev"
+        }
+    }
+}
