@@ -17,7 +17,16 @@
     ],
     "require": {
         "php": ">=5.3.9",
-        "symfony/security-acl": "~2.8"
+        "doctrine/doctrine-bundle": "~1.2",
+        "doctrine/orm": "~2.4",
+        "symfony/security-acl": "~2.8|~3.0",
+        "symfony/http-kernel": "~2.8|~3.0.0",
+        "symfony/config": "~2.8|~3.0.0",
+        "symfony/dependency-injection": "~2.8|~3.0.0",
+        "symfony/validator": "~2.8|~3.0"
+    },
+    "require-dev": {
+        "symfony/framework-bundle": "~2.8|~3.0"
     },
     "autoload": {
         "psr-4": { "Symfony\\Bundle\\AclBundle\\": "" }
