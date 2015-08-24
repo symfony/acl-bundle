@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns="http://symfony.com/schema/dic/security-acl"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://symfony.com/schema/dic/security-acl"
+    elementFormDefault="qualified">
+
+    <xsd:element name="config" type="config" />
+
+    <xsd:complexType name="config">
+        <xsd:all>
+            <xsd:element name="cache" type="cache" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="tables" type="tables" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="voter" type="voter" minOccurs="0" maxOccurs="1" />
+        </xsd:all>
+
+        <xsd:attribute name="connection" type="xsd:string" />
+	<xsd:attribute name="provider" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="cache">
+        <xsd:attribute name="id" type="xsd:string" />
+        <xsd:attribute name="prefix" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="tables">
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="entry" type="xsd:string" />
+        <xsd:attribute name="object-identity" type="xsd:string" />
+        <xsd:attribute name="object-identity-ancestors" type="xsd:string" />
+        <xsd:attribute name="security-identity" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="voter">
+        <xsd:attribute name="allow-if-object-identity-unavailable" type="xsd:boolean" />
+    </xsd:complexType>
+
+</xsd:schema>
