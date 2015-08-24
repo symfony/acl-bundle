@@ -1,7 +1,7 @@
 {
     "name": "symfony/acl-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony AclBundle",
+    "description": "Symfony Security Bundle - ACL (Access Control List)",
     "keywords": [],
     "homepage": "https://symfony.com",
     "license": "MIT",
@@ -23,10 +23,11 @@
         "symfony/http-kernel": "~2.8|~3.0.0",
         "symfony/config": "~2.8|~3.0.0",
         "symfony/dependency-injection": "~2.8|~3.0.0",
-        "symfony/validator": "~2.8|~3.0"
+        "symfony/validator": "~2.8|~3.0",
+        "symfony/framework-bundle": "~2.8|~3.0"
     },
     "require-dev": {
-        "symfony/framework-bundle": "~2.8|~3.0"
+        "symfony/phpunit-bridge": "~2.8|~3.0"
     },
     "autoload": {
         "psr-4": { "Symfony\\Bundle\\AclBundle\\": "" }
