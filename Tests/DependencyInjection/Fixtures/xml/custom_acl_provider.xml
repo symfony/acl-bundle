@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:sec-acl="http://symfony.com/schema/dic/security-acl"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/service/services-1.0.xsd
+	http://symfony.com/schema/dic/security-acl http://symfony.com/schema/dic/security-acl/security-acl-1.0.xsd">
+
+    <sec-acl:config provider="foo" />
+
+</container>

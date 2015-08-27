@@ -1,0 +1,11 @@
+imports:
+    - { resource: ./../config/framework.yml }
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        memory:   true
+        charset:  UTF8
+
+acl:
+    connection: default
