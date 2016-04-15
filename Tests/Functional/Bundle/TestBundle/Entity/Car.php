@@ -9,13 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Bundle\AclBundle;
-
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+namespace Symfony\Bundle\AclBundle\Tests\Functional\Bundle\TestBundle\Entity;
 
 /**
- * @author Fabien Potencier <fabien@symfony.com>
+ * Car.
+ *
+ * @author Kévin Dunglas <kevin@les-tilleuls.coop>
  */
-class AclBundle extends Bundle
+class Car
 {
+    public $id;
 }

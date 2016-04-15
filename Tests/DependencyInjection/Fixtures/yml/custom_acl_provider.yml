@@ -1,0 +1,5 @@
+imports:
+    - { resource: container1.yml }
+
+acl:
+    provider: foo

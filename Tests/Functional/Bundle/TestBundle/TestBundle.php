@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Bundle\AclBundle;
+namespace Symfony\Bundle\AclBundle\Tests\Functional\Bundle\TestBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * @author Fabien Potencier <fabien@symfony.com>
+ * @author Kévin Dunglas <kevin@les-tilleuls.coop>
  */
-class AclBundle extends Bundle
+class TestBundle extends Bundle
 {
 }
