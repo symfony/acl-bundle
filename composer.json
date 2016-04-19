@@ -26,7 +26,8 @@
         "symfony/security-acl": "~3.0"
     },
     "require-dev": {
-        "doctrine/doctrine-bundle": "~1.4"
+        "doctrine/doctrine-bundle": "~1.4",
+        "symfony/validator": "~3.0"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "To use the default dbal configuration"
