@@ -11,6 +11,7 @@
 
 namespace Symfony\Bundle\AclBundle\Command;
 
+
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,6 +28,8 @@ use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
  * Sets ACL for objects.
  *
  * @author Kévin Dunglas <kevin@les-tilleuls.coop>
+ *
+ * @final since version 3.4
  */
 class SetAclCommand extends ContainerAwareCommand
 {
@@ -57,7 +60,7 @@ class SetAclCommand extends ContainerAwareCommand
             ->setDescription('Sets ACL for objects')
             ->setHelp(<<<EOF
 The <info>%command.name%</info> command sets ACL.
-The ACL system must have been initialized with the <info>init:acl</info> command.
+The ACL system must have been initialized with the <info>acl:init</info> command.
 
 To set <comment>VIEW</comment> and <comment>EDIT</comment> permissions for the user <comment>kevin</comment> on the instance of
 <comment>Acme\MyClass</comment> having the identifier <comment>42</comment>:

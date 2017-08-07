@@ -11,6 +11,7 @@
 
 namespace Symfony\Bundle\AclBundle\DependencyInjection;
 
+use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -35,6 +36,10 @@ class AclExtension extends Extension implements PrependExtensionInterface
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('security_acl.xml');
+
+        if (class_exists(Application::class)) {
+            $loader->load('console.xml');
+        }
 
         if (isset($config['cache']['id'])) {
             $container->setAlias('security.acl.cache', $config['cache']['id']);

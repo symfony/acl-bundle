@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false" />
+
+        <service id="Symfony\Bundle\AclBundle\Command\InitAclCommand">
+            <tag name="console.command" command="acl:init" />
+            <tag name="console.command" command="init:acl" /> <!-- BC to be removed in 4.0 -->
+        </service>
+
+        <service id="Symfony\Bundle\AclBundle\Command\SetAclCommand">
+            <tag name="console.command" command="acl:set" />
+        </service>
+    </services>
+</container>

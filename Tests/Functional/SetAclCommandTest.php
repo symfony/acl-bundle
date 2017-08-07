@@ -11,14 +11,6 @@
 
 namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\AclBundle\Command\InitAclCommand;
 use Symfony\Bundle\AclBundle\Command\SetAclCommand;
@@ -37,23 +29,12 @@ use Symfony\Component\Security\Acl\Permission\BasicPermissionMap;
  */
 class SetAclCommandTest extends WebTestCase
 {
-    const OBJECT_CLASS = 'Symfony\Bundle\AclBundle\Tests\Functional\Bundle\AclBundle\Entity\Car';
+    const OBJECT_CLASS = 'Symfony\Bundle\SecurityBundle\Tests\Functional\Bundle\AclBundle\Entity\Car';
     const SECURITY_CLASS = 'Symfony\Component\Security\Core\User\User';
 
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->deleteTmpDir('Acl');
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        $this->deleteTmpDir('Acl');
-    }
-
+    /**
+     * @group legacy
+     */
     public function testSetAclUser()
     {
         $objectId = 1;
@@ -183,9 +164,9 @@ class SetAclCommandTest extends WebTestCase
         $application = new Application($kernel);
         $application->add(new InitAclCommand());
 
-        $initAclCommand = $application->find('init:acl');
+        $initAclCommand = $application->find('acl:init');
         $initAclCommandTester = new CommandTester($initAclCommand);
-        $initAclCommandTester->execute(array('command' => 'init:acl'));
+        $initAclCommandTester->execute(array('command' => 'acl:init'));
 
         return $application;
     }
