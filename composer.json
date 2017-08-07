@@ -28,7 +28,8 @@
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.4",
-        "symfony/validator": "~3.3|~4.0"
+        "symfony/validator": "~3.3|~4.0",
+        "symfony/yaml": "~3.3|~4.0"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "To use the default dbal configuration"
