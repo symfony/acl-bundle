@@ -102,16 +102,20 @@ class AclExtension extends Extension implements PrependExtensionInterface
         $securityConfig = $container->getExtensionConfig('security');
         $aclConfig = $container->getExtensionConfig('acl');
 
-        if (empty($securityConfig['acl'])) {
-            return;
+        $reducer = function ($carry, $config) {
+            return $carry || !empty($config);
+        };
+
+        $hasSecurityConfig = array_reduce($securityConfig, $reducer, false);
+        $hasAclConfig = array_reduce($aclConfig, $reducer, false);
+
+        if ($hasAclConfig && $hasSecurityConfig) {
+            throw new \RuntimeException('Both the SecurityBundle and the AclBundle are trying to configure the ACL, configure the AclBundle under "acl" only.');
         }
 
-        @trigger_error('As of 3.2 the "security.acl" config is deprecated and will be removed in 4.0. Please configure it under "acl".', E_USER_DEPRECATED);
-
-        if (!empty($aclConfig)) {
-            throw new \RuntimeException('There is ACL configuration under "security.acl" and "acl", use "acl" only.');
+        if (!$hasAclConfig && $hasSecurityConfig) {
+            @trigger_error('As of 3.4 the "security.acl" config is deprecated and will be removed in 4.0. Install symfony/acl-bundle configure it under "acl" instead.', E_USER_DEPRECATED);
+            $container->prependExtensionConfig('acl', $securityConfig['acl']);
         }
-
-        $container->prependExtensionConfig('acl', $securityConfig['acl']);
     }
 }

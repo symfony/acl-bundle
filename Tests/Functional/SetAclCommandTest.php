@@ -11,9 +11,10 @@
 
 namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\AclBundle\Command\InitAclCommand;
 use Symfony\Bundle\AclBundle\Command\SetAclCommand;
-use Symfony\Component\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -28,7 +29,7 @@ use Symfony\Component\Security\Core\User\User;
  * @author Kévin Dunglas <kevin@les-tilleuls.coop>
  * @requires extension pdo_sqlite
  */
-class SetAclCommandTest extends WebTestCase
+class SetAclCommandTest extends KernelTestCase
 {
     const OBJECT_CLASS = 'Symfony\Bundle\SecurityBundle\Tests\Functional\Bundle\AclBundle\Entity\Car';
     const SECURITY_CLASS = User::class;

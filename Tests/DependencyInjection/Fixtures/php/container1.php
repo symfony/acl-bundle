@@ -1,3 +1,3 @@
 <?php
 
-$container->loadFromExtension('acl', array());
+$container->loadFromExtension('acl');
