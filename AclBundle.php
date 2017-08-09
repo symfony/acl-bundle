@@ -11,7 +11,7 @@
 
 namespace Symfony\Bundle\AclBundle;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Console\Application;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -19,4 +19,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class AclBundle extends Bundle
 {
+    public function registerCommands(Application $application)
+    {
+        // disable the command locator as they are registered as service
+    }
 }
