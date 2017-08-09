@@ -17,15 +17,14 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "symfony/console": "~3.3|~4.0",
-        "symfony/config": "~3.3|~4.0",
         "symfony/dependency-injection": "~3.3|~4.0",
         "symfony/framework-bundle": "~3.3|~4.0",
         "symfony/http-kernel": "~3.3|~4.0",
         "symfony/polyfill-php70": "~1.0",
-        "symfony/security-acl": "~2.8"
+        "symfony/security-acl": "~2.7"
     },
     "require-dev": {
+        "symfony/console": "~3.3|~4.0"
         "doctrine/doctrine-bundle": "~1.4",
         "symfony/validator": "~3.3|~4.0",
         "symfony/yaml": "~3.3|~4.0",

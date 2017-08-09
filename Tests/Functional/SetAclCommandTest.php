@@ -11,15 +11,16 @@
 
 namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\AclBundle\Command\InitAclCommand;
 use Symfony\Bundle\AclBundle\Command\SetAclCommand;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\NoAceFoundException;
 use Symfony\Component\Security\Acl\Permission\BasicPermissionMap;
+use Symfony\Component\Security\Core\User\User;
 
 /**
  * Tests SetAclCommand.
@@ -30,7 +31,7 @@ use Symfony\Component\Security\Acl\Permission\BasicPermissionMap;
 class SetAclCommandTest extends WebTestCase
 {
     const OBJECT_CLASS = 'Symfony\Bundle\SecurityBundle\Tests\Functional\Bundle\AclBundle\Entity\Car';
-    const SECURITY_CLASS = 'Symfony\Component\Security\Core\User\User';
+    const SECURITY_CLASS = User::class;
 
     /**
      * @group legacy
@@ -158,7 +159,7 @@ class SetAclCommandTest extends WebTestCase
 
     private function getApplication()
     {
-        $kernel = $this->createKernel(array('test_case' => 'Acl'));
+        $kernel = static::createKernel(array('test_case' => 'Acl'));
         $kernel->boot();
 
         $application = new Application($kernel);

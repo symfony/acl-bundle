@@ -1,9 +1,20 @@
-AclBundle
-=========
+Access Control List Bundle
+==============================================
+
+The ACL bundle makes it possible to grant authorization based on resources.
 
 Resources
 ---------
 
-  * [Contributing](https://symfony.com/doc/current/contributing/index.html)
-  * [Report issues](https://github.com/symfony/acl-bundle/issues) and
-    [send Pull Requests](https://github.com/symfony/acl-bundle/pulls)
+Documentation:
+
+https://symfony.com/doc/current/security/acl_advanced.html
+
+Tests
+-----
+
+You can run the unit tests with the following command:
+
+    $ cd path/to/acl-bundle/
+    $ composer.phar install --dev
+    $ ./vendor/bin/simple-phpunit
