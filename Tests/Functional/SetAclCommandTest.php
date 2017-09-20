@@ -11,10 +11,9 @@
 
 namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\AclBundle\Command\InitAclCommand;
 use Symfony\Bundle\AclBundle\Command\SetAclCommand;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -29,7 +28,7 @@ use Symfony\Component\Security\Core\User\User;
  * @author Kévin Dunglas <kevin@les-tilleuls.coop>
  * @requires extension pdo_sqlite
  */
-class SetAclCommandTest extends KernelTestCase
+class SetAclCommandTest extends FunctionalTestCase
 {
     const OBJECT_CLASS = 'Symfony\Bundle\SecurityBundle\Tests\Functional\Bundle\AclBundle\Entity\Car';
     const SECURITY_CLASS = User::class;
@@ -115,7 +114,7 @@ class SetAclCommandTest extends KernelTestCase
         $kernel = static::createKernel(array('test_case' => 'Acl'));
         $kernel->boot();
 
-        $application = new Application($kernel);
+        $application = new Application();
         $application->add(new InitAclCommand($kernel->getContainer()->get('security.acl.dbal.connection'), $kernel->getContainer()->get('security.acl.dbal.schema')));
 
         $initAclCommand = $application->find('acl:init');
