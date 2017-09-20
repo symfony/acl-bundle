@@ -35,7 +35,7 @@ class AclExtension extends Extension implements PrependExtensionInterface
         $config = $this->processConfiguration($mainConfig, $configs);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('security_acl.xml');
+        $loader->load('acl.xml');
 
         if (class_exists(Application::class)) {
             $loader->load('console.xml');
@@ -54,7 +54,7 @@ class AclExtension extends Extension implements PrependExtensionInterface
         }
 
         // no provider configured
-        $loader->load('security_acl_dbal.xml');
+        $loader->load('acl_dbal.xml');
 
         if (null !== $config['connection']) {
             $container->setAlias('security.acl.dbal.connection', sprintf('doctrine.dbal.%s_connection', $config['connection']));

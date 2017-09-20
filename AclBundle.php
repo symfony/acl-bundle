@@ -17,10 +17,10 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class AclBundle extends Bundle
+final class AclBundle extends Bundle
 {
     public function registerCommands(Application $application)
     {
-        // disable the command locator as they are registered as service
+        // disable convention based registration as commands are registered as service
     }
 }
