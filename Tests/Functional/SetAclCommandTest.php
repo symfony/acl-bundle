@@ -11,9 +11,8 @@
 
 namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
-use Symfony\Bundle\AclBundle\Command\InitAclCommand;
 use Symfony\Bundle\AclBundle\Command\SetAclCommand;
-use Symfony\Component\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -114,8 +113,7 @@ class SetAclCommandTest extends FunctionalTestCase
         $kernel = static::createKernel(array('test_case' => 'Acl'));
         $kernel->boot();
 
-        $application = new Application();
-        $application->add(new InitAclCommand($kernel->getContainer()->get('security.acl.dbal.connection'), $kernel->getContainer()->get('security.acl.dbal.schema')));
+        $application = new Application($kernel);
 
         $initAclCommand = $application->find('acl:init');
         $initAclCommandTester = new CommandTester($initAclCommand);

@@ -12,7 +12,6 @@
 namespace Symfony\Bundle\AclBundle\DependencyInjection;
 
 use Symfony\Component\Console\Application;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -24,7 +23,7 @@ use Symfony\Component\Config\FileLocator;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class AclExtension extends Extension implements PrependExtensionInterface
+class AclExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -81,41 +80,8 @@ class AclExtension extends Extension implements PrependExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function getXsdValidationBasePath()
-    {
-        return __DIR__.'/../Resources/config/schema';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getNamespace()
     {
         return 'http://symfony.com/schema/dic/acl';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function prepend(ContainerBuilder $container)
-    {
-        $securityConfig = $container->getExtensionConfig('security');
-        $aclConfig = $container->getExtensionConfig('acl');
-
-        $reducer = function ($carry, $config) {
-            return $carry || !empty($config);
-        };
-
-        $hasSecurityConfig = array_reduce($securityConfig, $reducer, false);
-        $hasAclConfig = array_reduce($aclConfig, $reducer, false);
-
-        if ($hasAclConfig && $hasSecurityConfig) {
-            throw new \RuntimeException('Both the SecurityBundle and the AclBundle are trying to configure the ACL, configure the AclBundle under "acl" only.');
-        }
-
-        if (!$hasAclConfig && $hasSecurityConfig) {
-            @trigger_error('As of 3.4 the "security.acl" config is deprecated and will be removed in 4.0. Install symfony/acl-bundle configure it under "acl" instead.', E_USER_DEPRECATED);
-            $container->prependExtensionConfig('acl', $securityConfig['acl']);
-        }
     }
 }
