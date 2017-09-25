@@ -11,8 +11,7 @@
 
 namespace Symfony\Bundle\AclBundle\Command;
 
-
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -31,48 +30,17 @@ use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
  *
  * @final since version 3.4
  */
-class SetAclCommand extends ContainerAwareCommand
+class SetAclCommand extends Command
 {
+    protected static $defaultName = 'acl:set';
+
     private $provider;
 
-    /**
-     * @param MutableAclProviderInterface $provider
-     */
-    public function __construct($provider = null)
+    public function __construct(MutableAclProviderInterface $provider)
     {
-        if (!$provider instanceof MutableAclProviderInterface) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version 3.4 and will be removed in 4.0. If the command was registered by convention, make it a service instead.', __METHOD__), E_USER_DEPRECATED);
-
-            parent::__construct($provider);
-
-            return;
-        }
-
         parent::__construct();
 
         $this->provider = $provider;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * BC to be removed in 4.0
-     */
-    public function isEnabled()
-    {
-        if (null !== $this->provider) {
-            return parent::isEnabled();
-        }
-        if (!$this->getContainer()->has('security.acl.provider')) {
-            return false;
-        }
-
-        $provider = $this->getContainer()->get('security.acl.provider');
-        if (!$provider instanceof MutableAclProviderInterface) {
-            return false;
-        }
-
-        return parent::isEnabled();
     }
 
     /**
@@ -81,11 +49,10 @@ class SetAclCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('acl:set')
             ->setDescription('Sets ACL for objects')
             ->setHelp(<<<EOF
 The <info>%command.name%</info> command sets ACL.
-The ACL system must have been initialized with the <info>acl:init</info> command.
+The ACL system must have been initialized with the <info>init:acl</info> command.
 
 To set <comment>VIEW</comment> and <comment>EDIT</comment> permissions for the user <comment>kevin</comment> on the instance of
 <comment>Acme\MyClass</comment> having the identifier <comment>42</comment>:
@@ -117,14 +84,9 @@ EOF
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // BC to be removed in 4.0
-        if (null === $this->provider) {
-            $this->provider = $this->getContainer()->get('security.acl.provider');
-        }
-
         // Parse arguments
         $objectIdentities = array();
-        $maskBuilder = $this->getMaskBuilder();
+        $maskBuilder = new MaskBuilder();
         foreach ($input->getArgument('arguments') as $argument) {
             $data = explode(':', $argument, 2);
 
@@ -153,7 +115,7 @@ EOF
             foreach ($userOption as $user) {
                 $data = explode(':', $user, 2);
 
-                if (count($data) === 1) {
+                if (1 === count($data)) {
                     throw new \InvalidArgumentException('The user must follow the format "Acme/MyUser:username".');
                 }
 
@@ -187,17 +149,5 @@ EOF
 
             $this->provider->updateAcl($acl);
         }
-    }
-
-    /**
-     * Gets the mask builder.
-     *
-     * BC to be removed in 4.0
-     *
-     * @return MaskBuilder
-     */
-    protected function getMaskBuilder()
-    {
-        return new MaskBuilder();
     }
 }

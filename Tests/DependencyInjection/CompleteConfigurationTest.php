@@ -43,8 +43,8 @@ abstract class CompleteConfigurationTest extends \PHPUnit_Framework_TestCase
             return self::$containerCache[$file];
         }
         $container = new ContainerBuilder();
-        $security = new AclExtension();
-        $container->registerExtension($security);
+        $acl = new AclExtension();
+        $container->registerExtension($acl);
 
         $bundle = new AclBundle();
         $bundle->build($container);

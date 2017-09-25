@@ -16,21 +16,22 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "symfony/dependency-injection": "~3.3|~4.0",
-        "symfony/framework-bundle": "~3.3|~4.0",
-        "symfony/http-kernel": "~3.3|~4.0",
+        "php": "^5.5.9|>=7.0.8",
+        "ext-xml": "*",
+        "symfony/dependency-injection": "~3.4|~4.0",
+        "symfony/http-kernel": "~3.4|~4.0",
         "symfony/polyfill-php70": "~1.0",
         "symfony/security-acl": "~2.7|~3.0"
     },
     "require-dev": {
-        "symfony/console": "~3.3|~4.0",
+        "symfony/asset": "~3.4|~4.0",
+        "symfony/console": "~3.4|~4.0",
+        "symfony/framework-bundle": "~3.4|~4.0",
         "doctrine/doctrine-bundle": "~1.4",
-        "symfony/validator": "~3.3|~4.0",
-        "symfony/yaml": "~3.3|~4.0",
-        "symfony/phpunit-bridge": "~3.3|~4.0",
-        "symfony/asset": "~3.3|~4.0",
-        "symfony/security-bundle": "~3.3|~4.0"
+        "symfony/phpunit-bridge": "~3.4|~4.0",
+        "symfony/security-bundle": "~3.4|~4.0",
+        "symfony/validator": "~3.4|~4.0",
+        "symfony/yaml": "~3.4|~4.0"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "To use the default dbal configuration"

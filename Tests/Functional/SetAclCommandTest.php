@@ -11,10 +11,8 @@
 
 namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Bundle\AclBundle\Command\InitAclCommand;
 use Symfony\Bundle\AclBundle\Command\SetAclCommand;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -29,58 +27,10 @@ use Symfony\Component\Security\Core\User\User;
  * @author Kévin Dunglas <kevin@les-tilleuls.coop>
  * @requires extension pdo_sqlite
  */
-class SetAclCommandTest extends KernelTestCase
+class SetAclCommandTest extends FunctionalTestCase
 {
     const OBJECT_CLASS = 'Symfony\Bundle\SecurityBundle\Tests\Functional\Bundle\AclBundle\Entity\Car';
     const SECURITY_CLASS = User::class;
-
-    /**
-     * @group legacy
-     */
-    public function testSetAclUser()
-    {
-        $objectId = 1;
-        $securityUsername1 = 'kevin';
-        $securityUsername2 = 'anne';
-        $grantedPermission1 = 'VIEW';
-        $grantedPermission2 = 'EDIT';
-
-        $application = $this->getApplication();
-        $application->add(new SetAclCommand());
-
-        $setAclCommand = $application->find('acl:set');
-        $setAclCommandTester = new CommandTester($setAclCommand);
-        $setAclCommandTester->execute(array(
-            'command' => 'acl:set',
-            'arguments' => array($grantedPermission1, $grantedPermission2, sprintf('%s:%s', self::OBJECT_CLASS, $objectId)),
-            '--user' => array(sprintf('%s:%s', self::SECURITY_CLASS, $securityUsername1), sprintf('%s:%s', self::SECURITY_CLASS, $securityUsername2)),
-        ));
-
-        $objectIdentity = new ObjectIdentity($objectId, self::OBJECT_CLASS);
-        $securityIdentity1 = new UserSecurityIdentity($securityUsername1, self::SECURITY_CLASS);
-        $securityIdentity2 = new UserSecurityIdentity($securityUsername2, self::SECURITY_CLASS);
-        $permissionMap = new BasicPermissionMap();
-
-        /** @var \Symfony\Component\Security\Acl\Model\AclProviderInterface $aclProvider */
-        $aclProvider = $application->getKernel()->getContainer()->get('security.acl.provider');
-        $acl = $aclProvider->findAcl($objectIdentity, array($securityIdentity1));
-
-        $this->assertTrue($acl->isGranted($permissionMap->getMasks($grantedPermission1, null), array($securityIdentity1)));
-        $this->assertTrue($acl->isGranted($permissionMap->getMasks($grantedPermission1, null), array($securityIdentity2)));
-        $this->assertTrue($acl->isGranted($permissionMap->getMasks($grantedPermission2, null), array($securityIdentity2)));
-
-        try {
-            $acl->isGranted($permissionMap->getMasks('OWNER', null), array($securityIdentity1));
-            $this->fail('NoAceFoundException not throwed');
-        } catch (NoAceFoundException $e) {
-        }
-
-        try {
-            $acl->isGranted($permissionMap->getMasks('OPERATOR', null), array($securityIdentity2));
-            $this->fail('NoAceFoundException not throwed');
-        } catch (NoAceFoundException $e) {
-        }
-    }
 
     public function testSetAclRole()
     {
@@ -164,7 +114,6 @@ class SetAclCommandTest extends KernelTestCase
         $kernel->boot();
 
         $application = new Application($kernel);
-        $application->add(new InitAclCommand($kernel->getContainer()->get('security.acl.dbal.connection'), $kernel->getContainer()->get('security.acl.dbal.schema')));
 
         $initAclCommand = $application->find('acl:init');
         $initAclCommandTester = new CommandTester($initAclCommand);
