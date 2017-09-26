@@ -1,0 +1,103 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2017-08-06T17:29:55Z
+
+Would be great if can finish this one, merge it so that we can remove that part from Symfony, at least for version 4.
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-08-06T19:45:45Z
+
+I'll see if I can continue this work soon
+
+---------------------------------------------------------------------------
+
+by fabpot at 2017-08-06T20:51:37Z
+
+Thank you
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-08-07T12:55:55Z
+
+Okay tests are still a work in progress, I will see if I can fix them at a later point
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-08-08T13:33:08Z
+
+@ro0NL maybe I'm missing something, but it seems to grab the commands from the bundle itself (see `Bundle::registerCommands()`, as I've registered the commands under their FQCN, this in turn seems to trigger the deprecation error as shown in travis.
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-08-08T13:45:05Z
+
+Composer failures are related to weird `symfony/security-acl` releases.
+
+```
+versions : dev-master, 3.0.x-dev, v3.0.0, 2.8.x-dev, v2.8.0, 2.7.x-dev, v2.7.33, v2.7.32, v2.7.31, v2.7.30, v2.7.29, v2.7.28, v2.7.27, v2.7.26, v2.7.25, v2.7.24, v2.7.23, v2.7.22, v2.7.21, v2.7.20, v2.7.19, v2.7.18, v2.7.17, v2.7.16, v2.7.15, v2.7.14, v2.7.13, v2.7.12, v2.7.11, v2.7.10, v2.7.9, v2.7.8, v2.7.7, v2.7.6, v2.7.5, v2.7.4, v2.7.3, v2.7.2, v2.7.1, v2.7.0, v2.7.0-BETA2, v2.7.0-BETA1, 2.6.x-dev, v2.6.13, v2.6.12, v2.6.11, v2.6.10, v2.6.9, v2.6.8, v2.6.7, v2.6.6, v2.6.5, v2.6.4, v2.6.3, v2.6.2, v2.6.1, v2.6.0, v2.6.0-BETA2, v2.6.0-BETA1, 2.5.x-dev, v2.5.12, v2.5.11, v2.5.10, v2.5.9, v2.5.8, v2.5.7, v2.5.6, v2.5.5, v2.5.4, v2.5.3, v2.5.2, v2.5.1, v2.5.0, v2.5.0-RC1, v2.5.0-BETA2, v2.5.0-BETA1, 2.4.x-dev, v2.4.10, v2.4.9, v2.4.8, v2.4.7, v2.4.6, v2.4.5, v2.4.4, v2.4.3, v2.4.2, v2.4.1, v2.4.0, v2.4.0-RC1, v2.4.0-BETA2, v2.4.0-BETA1
+```
+
+---------------------------------------------------------------------------
+
+by ro0NL at 2017-08-08T14:45:05Z
+
+@iltar you need to make AclBundle::registerCommands a noop method to disable auto-discovery. See also security-bundle.
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-08-09T09:26:05Z
+
+Solved a series of issues, but I ran into an error. I must have miss configured something somewhere, but I don't know what. @stof can you check if the extension is more in line with what you mean? The only thing left to do is proper merging, but I'm not sure how to approach that at this point as I don't know which config is coming from the security bundle (doesn't have to be index 0 afaik).
+
+I could also simply drop this and throw an error instead.
+
+```php
+return $previousHandler ? $previousHandler($type, $message, $file, $line) : false;
+// where as the signature is:
+public function handleError($type, $msg, $file, $line, $context)
+```
+phpunit bridge and kernel are running 3.3.6 in my local with --prefer-stable. @nicolas-grekas do you know what this should be?
+
+```
+1) Symfony\Bundle\AclBundle\Tests\Functional\BundleDeprecationsTest::testIfDeprecationIsFired
+ArgumentCountError: Too few arguments to function Symfony\Bridge\PhpUnit\Legacy\SymfonyTestsListenerTrait::handleError(), 4 passed in /home/ivanderberg/projects/acl-bundle/vendor/symfony/http-kernel/Kernel.php on line 545 and exactly 5 expected
+
+/home/ivanderberg/projects/acl-bundle/vendor/symfony/http-kernel/Kernel.php:545
+/home/ivanderberg/projects/acl-bundle/DependencyInjection/AclExtension.php:118
+/home/ivanderberg/projects/acl-bundle/vendor/symfony/dependency-injection/Compiler/MergeExtensionConfigurationPass.php:37
+/home/ivanderberg/projects/acl-bundle/vendor/symfony/http-kernel/DependencyInjection/MergeExtensionConfigurationPass.php:39
+/home/ivanderberg/projects/acl-bundle/vendor/symfony/dependency-injection/Compiler/Compiler.php:143
+/home/ivanderberg/projects/acl-bundle/vendor/symfony/dependency-injection/ContainerBuilder.php:737
+/home/ivanderberg/projects/acl-bundle/vendor/symfony/http-kernel/Kernel.php:577
+/home/ivanderberg/projects/acl-bundle/vendor/symfony/http-kernel/Kernel.php:119
+/home/ivanderberg/projects/acl-bundle/Tests/Functional/BundleDeprecationsTest.php:36
+/home/ivanderberg/projects/acl-bundle/vendor/symfony/phpunit-bridge/bin/.phpunit/phpunit-5.7/phpunit:5
+```
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-09-21T09:46:38Z
+
+To me, the release cycle for this bundle should be independent from the symfony/symfony one (as pointed by @xabbuh) and so should not include any deprecation and start with `~3.4|~4.0` requirements for every symfony dependency, we will deprecate the existing ACL stuff in the core and remove them in 4.0.
+It must also not depend on `framework-bundle`, it's not an hard requirement actually.
+@iltar I started finishing this on my side, I will submit a PR to your fork very soon (in time for deprecating core's ACL stuff in 3.4).
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-09-21T09:58:44Z
+
+Fair enough, lets work towards that. We'll have to make sure the SecurityBundle indicates that first all deprecations should be fixed.
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-09-24T14:08:14Z
+
+@iltar See https://github.com/iltar/AclBundle/pull/2.
+I will take care of the symfony/symfony PR if you are OK with the changes.
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-09-25T06:17:46Z
+
+@chalasr thanks for PR, I've merged it and it looks all green :+1:
