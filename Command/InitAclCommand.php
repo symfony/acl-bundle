@@ -19,7 +19,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\SchemaException;
 
 /**
- * Installs the tables required by the ACL system.
+ * Creates the tables required by the ACL system.
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  *
@@ -46,17 +46,16 @@ class InitAclCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Mounts ACL tables in the database')
+            ->setDescription('Creates ACL tables in the database')
             ->setHelp(<<<'EOF'
-The <info>%command.name%</info> command mounts ACL tables in the database.
+The <info>%command.name%</info> command creates ACL tables in the database.
 
   <info>php %command.full_name%</info>
 
-The name of the DBAL connection must be configured in your <info>app/config/security.yml</info> configuration file in the <info>security.acl.connection</info> variable.
+The name of the DBAL connection must be configured in the <info>acl.connection</info> variable of your acl configuration file.
 
-  <info>security:
-      acl:
-          connection: default</info>
+  <info>acl:
+    connection: default</info>
 EOF
             )
         ;

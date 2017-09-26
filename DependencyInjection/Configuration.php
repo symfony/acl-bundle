@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('id')->end()
-                        ->scalarNode('prefix')->defaultValue('sf2_acl_')->end()
+                        ->scalarNode('prefix')->defaultValue('sf_acl_')->end()
                     ->end()
                 ->end()
                 ->scalarNode('provider')->end()
