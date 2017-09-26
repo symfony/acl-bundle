@@ -16,8 +16,25 @@
         }
     ],
     "require": {
-        "php": ">=5.3.9",
-        "symfony/security-acl": "~2.8"
+        "php": "^5.5.9|>=7.0.8",
+        "ext-xml": "*",
+        "symfony/dependency-injection": "~3.4|~4.0",
+        "symfony/http-kernel": "~3.4|~4.0",
+        "symfony/polyfill-php70": "~1.0",
+        "symfony/security-acl": "~2.7|~3.0"
+    },
+    "require-dev": {
+        "symfony/asset": "~3.4|~4.0",
+        "symfony/console": "~3.4|~4.0",
+        "symfony/framework-bundle": "~3.4|~4.0",
+        "doctrine/doctrine-bundle": "~1.4",
+        "symfony/phpunit-bridge": "~3.4|~4.0",
+        "symfony/security-bundle": "~3.4|~4.0",
+        "symfony/validator": "~3.4|~4.0",
+        "symfony/yaml": "~3.4|~4.0"
+    },
+    "suggest": {
+        "doctrine/doctrine-bundle": "To use the default dbal configuration"
     },
     "autoload": {
         "psr-4": { "Symfony\\Bundle\\AclBundle\\": "" }
@@ -25,7 +42,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.8-dev"
+            "dev-master": "3.4-dev"
         }
     }
 }

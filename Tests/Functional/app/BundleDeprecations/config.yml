@@ -1,0 +1,18 @@
+imports:
+    - { resource: ./../config/framework.yml }
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        memory:   true
+        charset:  UTF8
+
+security:
+    providers:
+        in_memory:
+            memory: ~
+    firewalls:
+        test:
+            anonymous: ~
+    acl:
+        connection: default
