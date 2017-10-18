@@ -34,7 +34,10 @@
         "doctrine/doctrine-bundle": "To use the default dbal configuration"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Bundle\\AclBundle\\": "" }
+        "psr-4": { "Symfony\\Bundle\\AclBundle\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Symfony\\Bundle\\AclBundle\\Tests\\": "tests/" }
     },
     "minimum-stability": "dev",
     "extra": {
