@@ -11,11 +11,12 @@
 
 namespace Symfony\Bundle\AclBundle\Tests\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\AclBundle\AclBundle;
 use Symfony\Bundle\AclBundle\DependencyInjection\AclExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-abstract class CompleteConfigurationTest extends \PHPUnit_Framework_TestCase
+abstract class CompleteConfigurationTest extends TestCase
 {
     private static $containerCache = array();
 

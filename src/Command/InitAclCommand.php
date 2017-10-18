@@ -22,10 +22,8 @@ use Doctrine\DBAL\Schema\SchemaException;
  * Creates the tables required by the ACL system.
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
- *
- * @final since version 3.4
  */
-class InitAclCommand extends Command
+final class InitAclCommand extends Command
 {
     protected static $defaultName = 'acl:init';
 

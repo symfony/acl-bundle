@@ -12,6 +12,7 @@
 namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
 use Symfony\Bundle\AclBundle\Command\SetAclCommand;
+use Symfony\Bundle\AclBundle\Tests\Functional\Bundle\TestBundle\Entity\Car;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
@@ -29,7 +30,7 @@ use Symfony\Component\Security\Core\User\User;
  */
 class SetAclCommandTest extends FunctionalTestCase
 {
-    const OBJECT_CLASS = 'Symfony\Bundle\SecurityBundle\Tests\Functional\Bundle\AclBundle\Entity\Car';
+    const OBJECT_CLASS = Car::class;
     const SECURITY_CLASS = User::class;
 
     public function testSetAclRole()
@@ -110,8 +111,7 @@ class SetAclCommandTest extends FunctionalTestCase
 
     private function getApplication()
     {
-        $kernel = static::createKernel(array('test_case' => 'Acl'));
-        $kernel->boot();
+        $kernel = static::bootKernel(array('test_case' => 'Acl'));
 
         $application = new Application($kernel);
 
