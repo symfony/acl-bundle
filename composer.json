@@ -24,7 +24,7 @@
         "symfony/security-bundle": "~3.4|~4.0"
     },
     "require-dev": {
-        "doctrine/doctrine-bundle": "~1.4",
+        "doctrine/doctrine-bundle": "^1.6.12",
         "symfony/console": "~3.4|~4.0",
         "symfony/framework-bundle": "~3.4|~4.0",
         "symfony/phpunit-bridge": "~3.4|~4.0",
