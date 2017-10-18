@@ -27,10 +27,8 @@ use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
  * Sets ACL for objects.
  *
  * @author Kévin Dunglas <kevin@les-tilleuls.coop>
- *
- * @final since version 3.4
  */
-class SetAclCommand extends Command
+final class SetAclCommand extends Command
 {
     protected static $defaultName = 'acl:set';
 

@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-3.2.0
+1.0.0
 -----
 
  * Extracted from symfony/symfony

@@ -32,7 +32,7 @@
             </argument>
             <argument type="service" id="security.acl.dbal.connection" />
         </service>
-        <service id="security.acl.dbal.schema_listener" class="Symfony\Bundle\SecurityBundle\EventListener\AclSchemaListener">
+        <service id="security.acl.dbal.schema_listener" class="Symfony\Bundle\AclBundle\EventListener\AclSchemaListener">
             <argument type="service" id="security.acl.dbal.schema" />
         </service>
 

@@ -12,20 +12,15 @@
 namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
 use Symfony\Bundle\AclBundle\Tests\Functional\app\AppKernel;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\HttpKernel\Tests\KernelTest;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class FunctionalTestCase extends KernelTest
+class FunctionalTestCase extends KernelTestCase
 {
     protected static function getKernelClass()
     {
         return AppKernel::class;
     }
 
-    /**
-     * @param array $options
-     * @return Kernel
-     */
     protected static function createKernel(array $options = array())
     {
         $class = self::getKernelClass();
