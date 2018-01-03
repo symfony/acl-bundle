@@ -3,7 +3,7 @@ Access Control List Bundle
 
 The ACL bundle makes it possible to grant authorization based on resources.
 
-[Read the bundle documentation](Resources/doc/index.rst)
+[Read the bundle documentation](src/Resources/doc/index.rst).
 
 Tests
 -----
