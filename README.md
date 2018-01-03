@@ -3,12 +3,7 @@ Access Control List Bundle
 
 The ACL bundle makes it possible to grant authorization based on resources.
 
-Resources
----------
-
-Documentation:
-
-https://symfony.com/doc/current/security/acl_advanced.html
+[Read the bundle documentation](Resources/doc/index.rst)
 
 Tests
 -----
