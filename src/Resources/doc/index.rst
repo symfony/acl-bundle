@@ -94,7 +94,7 @@ running the following command:
 
 .. code-block:: bash
 
-    $ php bin/console init:acl
+    $ php bin/console acl:init
 
 Getting Started
 ---------------
