@@ -41,7 +41,9 @@ class SetAclCommandTest extends FunctionalTestCase
         $role = 'ROLE_ADMIN';
 
         $application = $this->getApplication();
-        $application->add(new SetAclCommand($application->getKernel()->getContainer()->get('security.acl.provider')));
+        $application->add(new SetAclCommand(
+            self::$container->get('security.acl.provider'),
+            self::$container->get('security.acl.permission.map')));
 
         $setAclCommand = $application->find('acl:set');
         $setAclCommandTester = new CommandTester($setAclCommand);
@@ -83,7 +85,9 @@ class SetAclCommandTest extends FunctionalTestCase
         $role = 'ROLE_USER';
 
         $application = $this->getApplication();
-        $application->add(new SetAclCommand($application->getKernel()->getContainer()->get('security.acl.provider')));
+        $application->add(new SetAclCommand(
+            self::$container->get('security.acl.provider'),
+            self::$container->get('security.acl.permission.map')));
 
         $setAclCommand = $application->find('acl:set');
         $setAclCommandTester = new CommandTester($setAclCommand);

@@ -22,6 +22,7 @@ use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclAlreadyExistsException;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\Security\Acl\Permission\MaskBuilderRetrievalInterface;
 
 /**
  * Sets ACL for objects.
@@ -33,12 +34,19 @@ final class SetAclCommand extends Command
     protected static $defaultName = 'acl:set';
 
     private $provider;
+    private $maskBuilderRetrieval;
 
-    public function __construct(MutableAclProviderInterface $provider)
+    public function __construct(MutableAclProviderInterface $provider, MaskBuilderRetrievalInterface $maskBuilderRetrieval = null)
     {
         parent::__construct();
 
         $this->provider = $provider;
+        $this->maskBuilderRetrieval = $maskBuilderRetrieval ?? new class implements MaskBuilderRetrievalInterface {
+            public function getMaskBuilder()
+            {
+                return new MaskBuilder();
+            }
+        };
     }
 
     /**
@@ -73,8 +81,7 @@ EOF
             ->addArgument('arguments', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'A list of permissions and object identities (class name and ID separated by a column)')
             ->addOption('user', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'A list of security identities')
             ->addOption('role', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'A list of roles')
-            ->addOption('class-scope', null, InputOption::VALUE_NONE, 'Use class-scope entries')
-        ;
+            ->addOption('class-scope', null, InputOption::VALUE_NONE, 'Use class-scope entries');
     }
 
     /**
@@ -84,7 +91,7 @@ EOF
     {
         // Parse arguments
         $objectIdentities = [];
-        $maskBuilder = new MaskBuilder();
+        $maskBuilder = $this->maskBuilderRetrieval->getMaskBuilder();
         foreach ($input->getArgument('arguments') as $argument) {
             $data = explode(':', $argument, 2);
 

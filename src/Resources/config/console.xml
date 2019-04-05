@@ -15,6 +15,7 @@
 
         <service id="Symfony\Bundle\AclBundle\Command\SetAclCommand">
             <argument type="service" id="security.acl.provider" />
+            <argument type="service" id="security.acl.permission.map" />
             <tag name="console.command" command="acl:set" />
         </service>
     </services>
