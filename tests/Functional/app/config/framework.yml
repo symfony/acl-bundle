@@ -3,3 +3,12 @@ framework:
 
 services:
     logger: { class: Psr\Log\NullLogger }
+    test.service_container:
+        class: Symfony\Bundle\FrameworkBundle\Test\TestContainer
+        public: true
+        arguments:
+            - '@kernel'
+            - 'test.private_services_locator'
+    test.private_services_locator:
+        class: Symfony\Component\DependencyInjection\ServiceLocator
+        public: true
