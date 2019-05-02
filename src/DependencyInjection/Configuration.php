@@ -28,8 +28,14 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $tb = new TreeBuilder();
-        $rootNode = $tb->root('acl');
+        $tb = new TreeBuilder('acl');
+
+        if (method_exists($tb, 'getRootNode')) {
+            $rootNode = $tb->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $tb->root('acl');
+        }
 
         $rootNode
             ->children()
