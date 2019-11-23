@@ -77,5 +77,7 @@ EOF
         }
 
         $output->writeln('ACL tables have been initialized successfully.');
+
+        return 0;
     }
 }
