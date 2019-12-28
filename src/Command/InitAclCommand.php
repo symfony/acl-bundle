@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /*
  * This file is part of the Symfony package.
@@ -11,6 +12,7 @@
 
 namespace Symfony\Bundle\AclBundle\Command;
 
+use Doctrine\DBAL\DBALException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,6 +32,11 @@ final class InitAclCommand extends Command
     private $connection;
     private $schema;
 
+    /**
+     * InitAclCommand constructor.
+     * @param Connection $connection
+     * @param Schema $schema
+     */
     public function __construct(Connection $connection, Schema $schema)
     {
         parent::__construct();
@@ -41,7 +48,7 @@ final class InitAclCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Creates ACL tables in the database')
@@ -61,21 +68,50 @@ EOF
 
     /**
      * {@inheritdoc}
+     *
+     * @throws DBALException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        [$isAddSuccess, $message] = $this->addToSchema();
+        if ($isAddSuccess) {
+            foreach ($this->schema->toSql($this->connection->getDatabasePlatform()) as $sql) {
+                $this->connection->exec($sql);
+            }
+
+            $output->writeln('ACL tables have been initialized successfully.');
+            $exitCode = 0;
+        } else {
+            $output->writeln('Aborting: ' . $message);
+            $exitCode = 1;
+        }
+
+        return $exitCode;
+    }
+
+    /**
+     * @return array
+     * Example:
+     * [
+     *      false,
+     *      'error message',
+     * ]
+     */
+    private function addToSchema(): array
+    {
+        $isSuccess = true;
+        $message = '';
+
         try {
             $this->schema->addToSchema($this->connection->getSchemaManager()->createSchema());
         } catch (SchemaException $e) {
-            $output->writeln('Aborting: '.$e->getMessage());
-
-            return 1;
+            $isSuccess = false;
+            $message = $e->getMessage();
         }
 
-        foreach ($this->schema->toSql($this->connection->getDatabasePlatform()) as $sql) {
-            $this->connection->exec($sql);
-        }
-
-        $output->writeln('ACL tables have been initialized successfully.');
+        return [
+            $isSuccess,
+            $message,
+        ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /*
  * This file is part of the Symfony package.
@@ -11,6 +12,7 @@
 
 namespace Symfony\Bundle\AclBundle\Command;
 
+use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -44,7 +46,7 @@ final class SetAclCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Sets ACL for objects')
@@ -80,7 +82,7 @@ EOF
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Parse arguments
         $objectIdentities = array();
@@ -89,7 +91,7 @@ EOF
             $data = explode(':', $argument, 2);
 
             if (count($data) > 1) {
-                $objectIdentities[] = new ObjectIdentity($data[1], strtr($data[0], '/', '\\'));
+                $objectIdentities[] = new ObjectIdentity($data[1], str_replace('/', '\\', $data[0]));
             } else {
                 $maskBuilder->add($data[0]);
             }
@@ -103,7 +105,7 @@ EOF
         $classScopeOption = $input->getOption('class-scope');
 
         if (empty($userOption) && empty($roleOption)) {
-            throw new \InvalidArgumentException('A Role or a User must be specified.');
+            throw new InvalidArgumentException('A Role or a User must be specified.');
         }
 
         // Create security identities
@@ -114,10 +116,10 @@ EOF
                 $data = explode(':', $user, 2);
 
                 if (1 === count($data)) {
-                    throw new \InvalidArgumentException('The user must follow the format "Acme/MyUser:username".');
+                    throw new InvalidArgumentException('The user must follow the format "Acme/MyUser:username".');
                 }
 
-                $securityIdentities[] = new UserSecurityIdentity($data[1], strtr($data[0], '/', '\\'));
+                $securityIdentities[] = new UserSecurityIdentity($data[1], str_replace('/', '\\', $data[0]));
             }
         }
 
@@ -147,5 +149,7 @@ EOF
 
             $this->provider->updateAcl($acl);
         }
+
+        return 0;
     }
 }
