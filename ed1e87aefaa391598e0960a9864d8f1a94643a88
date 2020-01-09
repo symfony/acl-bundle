@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by chq81 at 2020-01-08T14:23:51Z
+
+@acrobat Hi there. Any idea when the acl-bundle gets the symfony 5 upgrade?
+
+---------------------------------------------------------------------------
+
+by fabpot at 2020-01-08T14:28:58Z
+
+Tests must be fixed first.
+
+---------------------------------------------------------------------------
+
+by acrobat at 2020-01-09T10:34:33Z
+
+Yes I started the pullrequest a while ago, but I'm planning on finishing it
+
+@fabpot would you be ok with dropping support for php 5.6?
+
+---------------------------------------------------------------------------
+
+by fabpot at 2020-01-09T10:52:52Z
+
+Sure, you can probably make a new major version that only supports Symfony 4.4/5.0 as well.
+
+---------------------------------------------------------------------------
+
+by acrobat at 2020-01-09T11:20:02Z
+
+@fabpot Ok, will do!
+
+---------------------------------------------------------------------------
+
+by acrobat at 2020-01-09T13:37:38Z
+
+@fabpot I've dropped the old php and symfony versions and sf5 support is added. I've also fixed the command return code deprecation.
+
+/cc @chq81
+
+---------------------------------------------------------------------------
+
+by chq81 at 2020-01-09T13:41:10Z
+
+@acrobat Thanks a lot.
