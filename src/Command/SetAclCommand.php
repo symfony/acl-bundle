@@ -147,5 +147,7 @@ EOF
 
             $this->provider->updateAcl($acl);
         }
+
+        return 0;
     }
 }

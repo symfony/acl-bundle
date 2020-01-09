@@ -11,10 +11,14 @@
 
 namespace Symfony\Bundle\AclBundle\Tests\DependencyInjection;
 
+use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\AclBundle\AclBundle;
 use Symfony\Bundle\AclBundle\DependencyInjection\AclExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Security\Acl\Dbal\Schema;
+use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
+use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 abstract class CompleteConfigurationTest extends TestCase
 {
@@ -44,6 +48,13 @@ abstract class CompleteConfigurationTest extends TestCase
             return self::$containerCache[$file];
         }
         $container = new ContainerBuilder();
+
+        // Mock required services
+        $container->register('security.role_hierarchy', RoleHierarchy::class);
+        $container->register('security.authentication.trust_resolver', AuthenticationTrustResolver::class);
+        $container->register('security.acl.dbal.connection', Connection::class);
+        $container->register('security.acl.dbal.schema', Schema::class);
+
         $acl = new AclExtension();
         $container->registerExtension($acl);
 
