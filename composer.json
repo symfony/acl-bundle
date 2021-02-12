@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.2.9",
+        "php": ">=7.2.9",
         "ext-xml": "*",
         "symfony/dependency-injection": "^4.4|^5.0",
         "symfony/http-kernel": "^4.4|^5.0",
@@ -25,6 +25,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "^1.6.12|^2.0",
+        "doctrine/dbal": "~2.2",
         "symfony/console": "^4.4|^5.0",
         "symfony/framework-bundle": "^4.4|^5.0",
         "symfony/phpunit-bridge": "^5.0",

@@ -20,13 +20,14 @@ matrix:
         - COMPOSER_FLAGS="--prefer-lowest"
 
     # Test latest php with LTS versions.
-    - php: 7.4
+    - php: 8.0
       env: SYMFONY_REQUIRE='^4.4'
 
     # Test the latest stable release
     - php: 7.2
     - php: 7.3
     - php: 7.4
+    - php: 8.0    
 
 before_install:
   - composer global require symfony/flex
