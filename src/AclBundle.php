@@ -11,7 +11,6 @@
 
 namespace Symfony\Bundle\AclBundle;
 
-use Symfony\Component\Console\Application;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -19,8 +18,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 final class AclBundle extends Bundle
 {
-    public function registerCommands(Application $application)
-    {
-        // disable convention based registration as commands are registered as service
-    }
 }
