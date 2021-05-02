@@ -21,7 +21,7 @@ class FunctionalTestCase extends KernelTestCase
         return AppKernel::class;
     }
 
-    protected static function createKernel(array $options = array())
+    protected static function createKernel(array $options = [])
     {
         $class = self::getKernelClass();
 
@@ -31,9 +31,9 @@ class FunctionalTestCase extends KernelTestCase
 
         return new $class(
             $options['test_case'],
-            isset($options['root_config']) ? $options['root_config'] : 'config.yml',
-            isset($options['environment']) ? $options['environment'] : 'Aclbundletest'.strtolower($options['test_case']),
-            isset($options['debug']) ? $options['debug'] : true
+            $options['root_config'] ?? 'config.yml',
+            $options['environment'] ?? 'Aclbundletest'.strtolower($options['test_case']),
+            $options['debug'] ?? true
         );
     }
 }

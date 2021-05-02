@@ -20,8 +20,8 @@ use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclAlreadyExistsException;
-use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 /**
  * Sets ACL for objects.
@@ -67,7 +67,7 @@ To set permissions for a role, use the <info>--role</info> option:
 To set permissions at the class scope, use the <info>--class-scope</info> option:
 
   <info>php %command.full_name% --class-scope --user=Symfony/Component/Security/Core/User/User:anne OWNER Acme/MyClass:42</info>
-  
+
 EOF
             )
             ->addArgument('arguments', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'A list of permissions and object identities (class name and ID separated by a column)')
@@ -83,12 +83,12 @@ EOF
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Parse arguments
-        $objectIdentities = array();
+        $objectIdentities = [];
         $maskBuilder = new MaskBuilder();
         foreach ($input->getArgument('arguments') as $argument) {
             $data = explode(':', $argument, 2);
 
-            if (count($data) > 1) {
+            if (\count($data) > 1) {
                 $objectIdentities[] = new ObjectIdentity($data[1], strtr($data[0], '/', '\\'));
             } else {
                 $maskBuilder->add($data[0]);
@@ -107,13 +107,13 @@ EOF
         }
 
         // Create security identities
-        $securityIdentities = array();
+        $securityIdentities = [];
 
         if ($userOption) {
             foreach ($userOption as $user) {
                 $data = explode(':', $user, 2);
 
-                if (1 === count($data)) {
+                if (1 === \count($data)) {
                     throw new \InvalidArgumentException('The user must follow the format "Acme/MyUser:username".');
                 }
 

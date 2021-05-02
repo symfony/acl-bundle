@@ -11,12 +11,12 @@
 
 namespace Symfony\Bundle\AclBundle\Command;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Schema\SchemaException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Acl\Dbal\Schema;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Schema\SchemaException;
 
 /**
  * Creates the tables required by the ACL system.
