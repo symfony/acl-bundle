@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 abstract class CompleteConfigurationTest extends TestCase
 {
-    private static $containerCache = array();
+    private static $containerCache = [];
 
     abstract protected function loadFromFile(ContainerBuilder $container, $file);
 
@@ -62,8 +62,8 @@ abstract class CompleteConfigurationTest extends TestCase
         $bundle->build($container);
         $this->loadFromFile($container, $file);
 
-        $container->getCompilerPassConfig()->setOptimizationPasses(array());
-        $container->getCompilerPassConfig()->setRemovingPasses(array());
+        $container->getCompilerPassConfig()->setOptimizationPasses([]);
+        $container->getCompilerPassConfig()->setRemovingPasses([]);
         $container->compile();
 
         return self::$containerCache[$file] = $container;

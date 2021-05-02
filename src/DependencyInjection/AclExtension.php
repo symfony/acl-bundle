@@ -11,11 +11,11 @@
 
 namespace Symfony\Bundle\AclBundle\DependencyInjection;
 
-use Symfony\Component\Console\Application;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * AclExtension.
@@ -61,11 +61,11 @@ class AclExtension extends Extension
 
         $container
             ->getDefinition('security.acl.dbal.schema_listener')
-            ->addTag('doctrine.event_listener', array(
+            ->addTag('doctrine.event_listener', [
                 'connection' => $config['connection'],
                 'event' => 'postGenerateSchema',
                 'lazy' => true,
-            ))
+            ])
         ;
 
         $container->getDefinition('security.acl.cache.doctrine')->addArgument($config['cache']['prefix']);

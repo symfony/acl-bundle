@@ -2,6 +2,6 @@
 
 $this->load('container1.php', $container);
 
-$container->loadFromExtension('acl', array(
+$container->loadFromExtension('acl', [
     'provider' => 'foo',
-));
+]);
