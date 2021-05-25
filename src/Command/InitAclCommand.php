@@ -73,7 +73,7 @@ EOF
         }
 
         foreach ($this->schema->toSql($this->connection->getDatabasePlatform()) as $sql) {
-            $this->connection->exec($sql);
+            $this->connection->executeStatement($sql);
         }
 
         $output->writeln('ACL tables have been initialized successfully.');
