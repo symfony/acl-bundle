@@ -6,6 +6,56 @@ on:
         branches: [master]
 
 jobs:
+    tests:
+        name: 'Tests on ${{ matrix.php }} (deps=${{ matrix.deps }}, symfony=${{ matrix.symfony }})'
+        runs-on: ubuntu-latest
+
+        env:
+            SYMFONY_DEPRECATIONS_HELPER: 'max[self]=0'
+
+        strategy:
+            matrix:
+                # Test the latest stable release
+                php: [7.2, 7.3, 7.4, 8.0]
+                deps: [stable]
+                symfony: ['^5.0']
+                include:
+                    # Test lowest dependencies
+                    - php: 7.2
+                      deps: lowest
+                      symfony: '^4.4'
+
+                    # Test latest php with LTS versions
+                    - php: 8.0
+                      deps: stable
+                      symfony: '^4.4'
+
+        steps:
+            - name: Checkout code
+              uses: 'actions/checkout@v2'
+
+            - name: Install PHP with extensions
+              uses: 'shivammathur/setup-php@2.7.0'
+              with:
+                  coverage: none
+                  php-version: '${{ matrix.php }}'
+                  tools: 'composer:v2, flex'
+
+            - name: Configure Symfony version
+              run: 'echo SYMFONY_REQUIRE="${{ matrix.symfony }}" >> $GITHUB_ENV'
+
+            - name: Composer install
+              uses: 'ramsey/composer-install@v1'
+              with:
+                  dependency-versions: '${{ matrix.deps }}'
+                  composer-options: '--prefer-dist'
+
+            - name: Install PHPUnit
+              run: vendor/bin/simple-phpunit install
+
+            - name: Run tests
+              run: vendor/bin/simple-phpunit
+
     cs:
         name: 'Code Style'
         runs-on: ubuntu-latest
@@ -13,6 +63,7 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
+
             - name: PHP-CS-Fixer
               uses: docker://oskarstark/php-cs-fixer-ga:2.18.6
               with:
