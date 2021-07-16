@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by mbabker at 2021-04-25T14:29:30Z
+
+> The bundle would currently still alias the Doctrine cache as `security.acl.cache`, so the new cache service won't be used.
+
+That alias is set from the `cache.id` config node (which defaults to null), it doesn't automatically map to the Doctrine cache implementation.
+
+---------------------------------------------------------------------------
+
+by derrabus at 2021-04-26T08:35:08Z
+
+Right, but the bundle does not integrate that new cache either.
+
+How about a new option `pool` where I can specify one of the cache pools configured by FrameworkBundle that I want to be wired as ACL cache? Of course, we should throw an exception if the app specifies both options, `id` and `pool`.
+
+---------------------------------------------------------------------------
+
+by mbabker at 2021-04-26T22:56:33Z
+
+I've tweaked the bundle config to add the new option and adjusted everything else accordingly.  Also added tests covering the cache service setup since none existed previously.
