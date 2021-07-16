@@ -1,0 +1,3 @@
+acl:
+    cache:
+        id: security.acl.cache.doctrine

@@ -15,7 +15,9 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Security\Acl\Domain\PsrAclCache;
 
 /**
  * AclExtension.
@@ -42,7 +44,21 @@ class AclExtension extends Extension
 
         if (isset($config['cache']['id'])) {
             $container->setAlias('security.acl.cache', $config['cache']['id']);
+        } elseif (isset($config['cache']['pool'])) {
+            if (!class_exists(PsrAclCache::class)) {
+                throw new \LogicException('The "cache.pool" option requires "symfony/security-acl" 3.2 or higher, try upgrading the package.');
+            }
+
+            $container->register('security.acl.cache.psr', PsrAclCache::class)
+                ->setArguments([
+                    new Reference($config['cache']['pool']),
+                    new Reference('security.acl.permission_granting_strategy'),
+                    $config['cache']['prefix'],
+                ]);
+
+            $container->setAlias('security.acl.cache', 'security.acl.cache.psr');
         }
+
         $container->getDefinition('security.acl.voter.basic_permissions')->addArgument($config['voter']['allow_if_object_identity_unavailable']);
 
         // custom ACL provider

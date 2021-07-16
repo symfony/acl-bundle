@@ -15,8 +15,10 @@ use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\AclBundle\AclBundle;
 use Symfony\Bundle\AclBundle\DependencyInjection\AclExtension;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Security\Acl\Dbal\Schema;
+use Symfony\Component\Security\Acl\Domain\PsrAclCache;
 use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
@@ -40,6 +42,33 @@ abstract class CompleteConfigurationTest extends TestCase
 
         $this->assertFalse($container->hasDefinition('security.acl.dbal.provider'));
         $this->assertEquals('foo', (string) $container->getAlias('security.acl.provider'));
+    }
+
+    public function testCachePool()
+    {
+        if (!class_exists(PsrAclCache::class)) {
+            $this->markTestSkipped('Requires symfony/security-acl >=3.2');
+        }
+
+        $container = $this->getContainer('cache_pool');
+
+        $this->assertTrue($container->hasDefinition('security.acl.cache.psr'));
+        $this->assertEquals('security.acl.cache.psr', (string) $container->getAlias('security.acl.cache'));
+    }
+
+    public function testCacheService()
+    {
+        $container = $this->getContainer('cache_service');
+
+        $this->assertEquals('security.acl.cache.doctrine', (string) $container->getAlias('security.acl.cache'));
+    }
+
+    public function testInvalidCacheConfig()
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "acl.cache": You cannot set both a cache service id and cache pool');
+
+        $this->getContainer('invalid_cache_config');
     }
 
     protected function getContainer($file)
