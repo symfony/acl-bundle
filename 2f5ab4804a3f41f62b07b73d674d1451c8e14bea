@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by derrabus at 2021-07-18T12:35:10Z
+
+You also need to add a psalm.xml file.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-07-18T12:51:02Z
+
+Oh right, thanks added `psalm.xml`. I guess we need to merge this PR to test if it's really working.
