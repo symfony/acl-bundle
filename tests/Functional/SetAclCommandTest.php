@@ -30,8 +30,8 @@ use Symfony\Component\Security\Core\User\User;
  */
 class SetAclCommandTest extends FunctionalTestCase
 {
-    const OBJECT_CLASS = Car::class;
-    const SECURITY_CLASS = User::class;
+    private const OBJECT_CLASS = Car::class;
+    private const SECURITY_CLASS = User::class;
 
     public function testSetAclRole()
     {
