@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           composer remove --dev --no-update --no-interaction symfony/phpunit-bridge
-          composer require --no-update vimeo/psalm phpunit/phpunit:^9.5 psalm/plugin-phpunit
+          composer require --no-update vimeo/psalm phpunit/phpunit:^9.5 psalm/plugin-phpunit psalm/plugin-symfony
           composer update --no-progress --ansi
           git checkout -- composer.json
 
@@ -40,9 +40,11 @@ jobs:
       - name: Generate Psalm baseline
         run: |
           git checkout -m ${{ github.base_ref }}
+          ./tests/Functional/app/bin/console cache:warmup --no-optional-warmers
           ./vendor/bin/psalm --set-baseline=.github/psalm/psalm.baseline.xml --no-progress
           git checkout -m FETCH_HEAD
 
       - name: Psalm
         run: |
+          ./tests/Functional/app/bin/console cache:warmup --no-optional-warmers
           ./vendor/bin/psalm --output-format=github --no-progress

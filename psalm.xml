@@ -18,5 +18,8 @@
 
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
+            <containerXml>tests/Functional/app/var/cache/Acltest/appSymfony_Bundle_AclBundle_Tests_Functional_app_AppKernelTestDebugContainer.xml</containerXml>
+        </pluginClass>
     </plugins>
 </psalm>
