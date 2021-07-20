@@ -50,8 +50,8 @@ system is supposed to use:
     security:
         # ...
 
-    acl:
-        connection: default
+        acl:
+            connection: default
 
 .. code-block:: xml
 
