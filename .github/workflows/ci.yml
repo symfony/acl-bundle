@@ -56,6 +56,9 @@ jobs:
             - name: Configure Symfony version
               run: 'echo SYMFONY_REQUIRE="${{ matrix.symfony }}" >> $GITHUB_ENV'
 
+            - run: composer config minimum-stability dev
+              if: "${{ matrix.symfony == '^6.0' }}"
+
             - name: Composer install
               uses: 'ramsey/composer-install@v1'
               with:
