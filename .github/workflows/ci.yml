@@ -16,19 +16,26 @@ jobs:
         strategy:
             matrix:
                 # Test the latest stable release
-                php: [7.2, 7.3, 7.4, 8.0]
+                php: [7.2, 7.3, 7.4, 8.0, 8.1]
                 deps: [stable]
-                symfony: ['^5.0']
+                symfony: ['^5.0', '^6.0']
                 include:
                     # Test lowest dependencies
                     - php: 7.2
                       deps: lowest
                       symfony: '^4.4'
 
-                    # Test latest php with LTS versions
+                                     # Test latest php with LTS versions
                     - php: 8.0
                       deps: stable
-                      symfony: '^4.4'
+                      symfony: '^5.4'
+                exclude:
+                    - php: 7.2
+                      symfony: '^6.0'
+                    - php: 7.3
+                      symfony: '^6.0'
+                    - php: 7.4
+                      symfony: '^6.0'
 
         steps:
             - name: Checkout code
