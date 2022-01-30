@@ -1,6 +1,6 @@
 {
-    "name": "symfony/acl-bundle-ep",
-    "type": "symfony-bundle",
+    "name": "ep/acl-bundle-ep",
+    "type": "symfony-bundle-ep",
     "description": "Symfony AclBundle",
     "keywords": [],
     "homepage": "https://symfony.com",
