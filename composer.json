@@ -1,5 +1,5 @@
 {
-    "name": "symfony/acl-bundle",
+    "name": "symfony/acl-bundle-ep",
     "type": "symfony-bundle",
     "description": "Symfony AclBundle",
     "keywords": [],
