@@ -1,6 +1,6 @@
 <?php
 
-$this->load('container1.php', $container);
+$this->load('container1.php', 'php');
 
 $container->loadFromExtension('acl', [
     'cache' => [
