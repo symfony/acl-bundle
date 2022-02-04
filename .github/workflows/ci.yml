@@ -25,10 +25,15 @@ jobs:
                       deps: lowest
                       symfony: '^4.4'
 
-                    # Test latest php with LTS versions
+                    # Test LTS versions
                     - php: 8.0
                       deps: stable
                       symfony: '^4.4'
+
+                    # Test latest php/Symfony
+                    - php: 8.1
+                      deps: stable
+                      symfony: '^6.0'
 
         steps:
             - name: Checkout code
@@ -43,6 +48,9 @@ jobs:
 
             - name: Configure Symfony version
               run: 'echo SYMFONY_REQUIRE="${{ matrix.symfony }}" >> $GITHUB_ENV'
+
+            - name: Allow dev dependencies
+              run: 'composer config minimum-stability dev'
 
             - name: Composer install
               uses: 'ramsey/composer-install@v1'

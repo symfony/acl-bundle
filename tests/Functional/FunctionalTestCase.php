@@ -13,15 +13,19 @@ namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
 use Symfony\Bundle\AclBundle\Tests\Functional\app\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class FunctionalTestCase extends KernelTestCase
 {
-    protected static function getKernelClass()
+    /**
+     * @return class-string<KernelInterface>
+     */
+    protected static function getKernelClass(): string
     {
         return AppKernel::class;
     }
 
-    protected static function createKernel(array $options = [])
+    protected static function createKernel(array $options = []): KernelInterface
     {
         $class = self::getKernelClass();
 
