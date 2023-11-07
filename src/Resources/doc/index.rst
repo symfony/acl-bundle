@@ -46,12 +46,9 @@ system is supposed to use:
 
 .. code-block:: yaml
 
-    # app/config/security.yml
-    security:
-        # ...
-
-        acl:
-            connection: default
+    # app/config/acl.yml
+    acl:
+        connection: default
 
 .. code-block:: xml
 
