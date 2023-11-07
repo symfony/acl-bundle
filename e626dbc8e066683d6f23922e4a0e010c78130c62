@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by cedricziel at 2018-03-29T08:01:42Z
+
+@xabbuh I updated the PR. I replaced all bash blocks with terminal ones so it's consistent.
+
+---------------------------------------------------------------------------
+
+by cedricziel at 2018-04-12T13:05:33Z
+
+Anything I could do to make this compliant?
+
+---------------------------------------------------------------------------
+
+by johnpancoast at 2018-06-18T00:23:41Z
+
+I'm new to this specific project, but I happened to come across this PR and [this part about updating with doctrine migrations](https://github.com/symfony/acl-bundle/pull/12/files#diff-83ad34138e981de744f2667057885e40R99) which seems like an important thing to clarify.
+
+Looking at the above failed build, it seemed it just timed out on a composer update, but I'm not seeing the details on first glance.
+
+Seems as though we should resolve whatever that issue is, merge this PR, and possibly create a `1.0.1` tag with the updated documentation for future users.
+
+Thoughts?
