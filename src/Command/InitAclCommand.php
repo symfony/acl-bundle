@@ -41,7 +41,7 @@ final class InitAclCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Creates ACL tables in the database')
@@ -62,7 +62,7 @@ EOF
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->schema->addToSchema($this->connection->getSchemaManager()->createSchema());
