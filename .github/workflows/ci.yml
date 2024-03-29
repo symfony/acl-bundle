@@ -30,10 +30,15 @@ jobs:
                       deps: stable
                       symfony: '^4.4'
 
-                    # Test latest php/Symfony
+                    # Test Symfony 6
                     - php: 8.1
                       deps: stable
                       symfony: '^6.0'
+
+                    # Test latest php/Symfony
+                    - php: 8.3
+                      deps: stable
+                      symfony: '^7.0'
 
         steps:
             - name: Checkout code

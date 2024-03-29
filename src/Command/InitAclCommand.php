@@ -13,6 +13,7 @@ namespace Symfony\Bundle\AclBundle\Command;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\SchemaException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,6 +24,7 @@ use Symfony\Component\Security\Acl\Dbal\Schema;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
+#[AsCommand(name: 'acl:init', description: 'Creates ACL tables in the database')]
 final class InitAclCommand extends Command
 {
     protected static $defaultName = 'acl:init';
@@ -41,7 +43,7 @@ final class InitAclCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Creates ACL tables in the database')
@@ -62,7 +64,7 @@ EOF
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->schema->addToSchema($this->connection->getSchemaManager()->createSchema());
