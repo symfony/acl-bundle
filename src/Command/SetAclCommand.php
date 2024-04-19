@@ -11,6 +11,7 @@
 
 namespace Symfony\Bundle\AclBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,6 +29,7 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
  *
  * @author Kévin Dunglas <kevin@les-tilleuls.coop>
  */
+#[AsCommand(name: 'acl:set', description: 'Sets ACL for objects')]
 final class SetAclCommand extends Command
 {
     protected static $defaultName = 'acl:set';
@@ -80,7 +82,7 @@ EOF
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Parse arguments
         $objectIdentities = [];
