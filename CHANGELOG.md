@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+2.4.0
+-----
+
+ * Add support for Symfony 7
+
+2.3.0
+-----
+
+ * Add support for Symfony 6
+
 2.2.0
 -----
 
