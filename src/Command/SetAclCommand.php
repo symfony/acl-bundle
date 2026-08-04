@@ -46,7 +46,7 @@ final class SetAclCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Sets ACL for objects')

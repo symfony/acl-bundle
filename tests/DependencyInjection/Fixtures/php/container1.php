@@ -1,3 +1,7 @@
 <?php
 
-$container->loadFromExtension('acl');
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $container) {
+    $container->extension('acl', []);
+};

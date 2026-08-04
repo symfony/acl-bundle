@@ -1,9 +1,13 @@
 <?php
 
-$this->load('container1.php', 'php');
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-$container->loadFromExtension('acl', [
-    'cache' => [
-        'pool' => 'cache.app',
-    ],
-]);
+return static function (ContainerConfigurator $container) {
+    $container->import('container1.php');
+
+    $container->extension('acl', [
+        'cache' => [
+            'pool' => 'cache.app',
+        ],
+    ]);
+};

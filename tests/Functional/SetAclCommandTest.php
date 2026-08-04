@@ -11,6 +11,7 @@
 
 namespace Symfony\Bundle\AclBundle\Tests\Functional;
 
+use Doctrine\DBAL\Connection;
 use Symfony\Bundle\AclBundle\Command\SetAclCommand;
 use Symfony\Bundle\AclBundle\Tests\Functional\Bundle\TestBundle\Entity\Car;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -32,6 +33,13 @@ class SetAclCommandTest extends FunctionalTestCase
 {
     private const OBJECT_CLASS = Car::class;
     private const SECURITY_CLASS = User::class;
+
+    protected function setUp(): void
+    {
+        if (!method_exists(Connection::class, 'getSchemaManager')) {
+            $this->markTestSkipped('symfony/security-acl does not support doctrine/dbal 4 and doctrine/persistence 4 yet.');
+        }
+    }
 
     public function testSetAclRole()
     {
