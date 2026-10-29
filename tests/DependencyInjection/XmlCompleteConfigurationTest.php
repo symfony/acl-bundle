@@ -17,6 +17,13 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 class XmlCompleteConfigurationTest extends CompleteConfigurationTest
 {
+    protected function setUp(): void
+    {
+        if (!class_exists(XmlFileLoader::class)) {
+            $this->markTestSkipped('The XML configuration format has been removed in Symfony 8.');
+        }
+    }
+
     protected function loadFromFile(ContainerBuilder $container, $file)
     {
         $loadXml = new XmlFileLoader($container, new FileLocator(__DIR__.'/Fixtures/xml'));

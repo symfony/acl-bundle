@@ -1,7 +1,11 @@
 <?php
 
-$this->load('container1.php');
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-$container->loadFromExtension('acl', [
-    'provider' => 'foo',
-]);
+return static function (ContainerConfigurator $container) {
+    $container->import('container1.php');
+
+    $container->extension('acl', [
+        'provider' => 'foo',
+    ]);
+};
