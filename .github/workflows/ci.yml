@@ -60,8 +60,11 @@ jobs:
             - name: Configure Symfony version
               run: 'echo SYMFONY_REQUIRE="${{ matrix.symfony }}" >> $GITHUB_ENV'
 
-            - name: Allow dev dependencies
-              run: 'composer config minimum-stability dev'
+            - name: Configure Composer
+              run: |
+                  composer config minimum-stability dev
+                  # Symfony 4.4 has unfixed advisories, which Composer refuses to install by default
+                  composer config audit.block-insecure false
 
             - name: Composer install
               uses: ramsey/composer-install@v3
