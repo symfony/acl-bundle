@@ -7,7 +7,7 @@ on:
 
 jobs:
     tests:
-        name: 'Tests on ${{ matrix.php }} (deps=${{ matrix.deps }}, symfony=${{ matrix.symfony }})'
+        name: "Tests on ${{ matrix.php }} (deps=${{ matrix.deps }}${{ matrix.symfony && format(', symfony={0}', matrix.symfony) || '' }})"
         runs-on: ubuntu-latest
 
         env:
@@ -20,7 +20,6 @@ jobs:
                     # Test lowest dependencies
                     - php: '7.2'
                       deps: lowest
-                      symfony: '^5.4'
 
                     # Test LTS versions
                     - php: '7.4'
@@ -35,10 +34,9 @@ jobs:
                       deps: highest
                       symfony: '^7.4'
 
-                    # Test the latest stable version
+                    # Test the latest stable versions
                     - php: '8.5'
                       deps: highest
-                      symfony: '^8.1'
 
         steps:
             - name: Checkout code
@@ -52,6 +50,7 @@ jobs:
                   tools: 'composer:v2, flex'
 
             - name: Configure Symfony version
+              if: matrix.symfony
               run: 'echo SYMFONY_REQUIRE="${{ matrix.symfony }}" >> $GITHUB_ENV'
 
             - name: Configure Composer
