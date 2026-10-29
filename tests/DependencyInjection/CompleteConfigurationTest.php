@@ -15,6 +15,7 @@ use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\AclBundle\AclBundle;
 use Symfony\Bundle\AclBundle\DependencyInjection\AclExtension;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Security\Acl\Dbal\Schema;
@@ -83,6 +84,7 @@ abstract class CompleteConfigurationTest extends TestCase
         $container->register('security.authentication.trust_resolver', AuthenticationTrustResolver::class);
         $container->register('security.acl.dbal.connection', Connection::class);
         $container->register('security.acl.dbal.schema', Schema::class);
+        $container->register('cache.app', ArrayAdapter::class);
 
         $acl = new AclExtension();
         $container->registerExtension($acl);
