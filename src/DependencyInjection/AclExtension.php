@@ -45,10 +45,6 @@ class AclExtension extends Extension
         if (isset($config['cache']['id'])) {
             $container->setAlias('security.acl.cache', $config['cache']['id']);
         } elseif (isset($config['cache']['pool'])) {
-            if (!class_exists(PsrAclCache::class)) {
-                throw new \LogicException('The "cache.pool" option requires "symfony/security-acl" 3.2 or higher, try upgrading the package.');
-            }
-
             $container->register('security.acl.cache.psr', PsrAclCache::class)
                 ->setArguments([
                     new Reference($config['cache']['pool']),

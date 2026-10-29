@@ -19,7 +19,6 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Security\Acl\Dbal\Schema;
-use Symfony\Component\Security\Acl\Domain\PsrAclCache;
 use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
@@ -47,10 +46,6 @@ abstract class CompleteConfigurationTest extends TestCase
 
     public function testCachePool()
     {
-        if (!class_exists(PsrAclCache::class)) {
-            $this->markTestSkipped('Requires symfony/security-acl >=3.2');
-        }
-
         $container = $this->getContainer('cache_pool');
 
         $this->assertTrue($container->hasDefinition('security.acl.cache.psr'));
