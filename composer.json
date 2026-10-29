@@ -29,7 +29,7 @@
         "doctrine/orm": "^2.7.3|^3.0",
         "symfony/console": "^5.4|^6.0|^7.0|^8.0",
         "symfony/framework-bundle": "^5.4|^6.0|^7.0|^8.0",
-        "symfony/phpunit-bridge": "^5.4|^6.0|^7.0|^8.0",
+        "symfony/phpunit-bridge": "^5.4.33|^6.4|^7.0|^8.0",
         "symfony/yaml": "^5.4|^6.0|^7.0|^8.0"
     },
     "suggest": {
