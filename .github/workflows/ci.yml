@@ -57,7 +57,8 @@ jobs:
             - name: Configure Composer
               run: |
                   composer config minimum-stability dev
-                  # Symfony 4.4 has unfixed advisories, which Composer refuses to install by default
+                  composer config prefer-stable true
+                  # Test the versions we support even when they are affected by security advisories
                   composer config audit.block-insecure false
 
             - name: Composer install
