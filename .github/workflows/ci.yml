@@ -14,6 +14,7 @@ jobs:
             SYMFONY_DEPRECATIONS_HELPER: 'max[self]=0'
 
         strategy:
+            fail-fast: false
             matrix:
                 # Test the latest stable release
                 php: ['7.2', '7.3', '7.4', '8.0']
