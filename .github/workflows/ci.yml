@@ -16,35 +16,29 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # Test the latest stable release
-                php: ['7.2', '7.3', '7.4', '8.0']
-                deps: [highest]
-                symfony: ['^5.0']
                 include:
                     # Test lowest dependencies
                     - php: '7.2'
                       deps: lowest
-                      symfony: '^4.4'
+                      symfony: '^5.4'
 
                     # Test LTS versions
-                    - php: '8.0'
+                    - php: '7.4'
                       deps: highest
-                      symfony: '^4.4'
+                      symfony: '^5.4'
 
-                    # Test Symfony 6
                     - php: '8.1'
                       deps: highest
-                      symfony: '^6.0'
+                      symfony: '^6.4'
 
-                    # Test Symfony 7
                     - php: '8.3'
                       deps: highest
-                      symfony: '^7.0'
+                      symfony: '^7.4'
 
-                    # Test latest php/Symfony
-                    - php: '8.4'
+                    # Test the latest stable version
+                    - php: '8.5'
                       deps: highest
-                      symfony: '^8.0'
+                      symfony: '^8.1'
 
         steps:
             - name: Checkout code
@@ -63,7 +57,8 @@ jobs:
             - name: Configure Composer
               run: |
                   composer config minimum-stability dev
-                  # Symfony 4.4 has unfixed advisories, which Composer refuses to install by default
+                  composer config prefer-stable true
+                  # Test the versions we support even when they are affected by security advisories
                   composer config audit.block-insecure false
 
             - name: Composer install
