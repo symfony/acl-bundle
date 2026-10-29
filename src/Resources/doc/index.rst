@@ -41,42 +41,24 @@ Bootstrapping
 -------------
 
 Now, before you can finally get into action, you need to do some bootstrapping.
-First, you need to configure (using YAML, XML or PHP) the connection the ACL
-system is supposed to use:
+First, you need to configure the connection the ACL system is supposed to use:
 
 .. code-block:: yaml
 
-    # app/config/acl.yml
+    # config/packages/acl.yaml
     acl:
         connection: default
 
-.. code-block:: xml
-
-    <!-- app/config/security.xml -->
-    <?xml version="1.0" encoding="UTF-8"?>
-    <srv:container xmlns="http://symfony.com/schema/dic/security"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:srv="http://symfony.com/schema/dic/services"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-        <config>
-            <!-- ... -->
-
-            <acl connection="default" />
-        </config>
-    </srv:container>
-
 .. code-block:: php
 
-    // app/config/security.php
-    $container->loadFromExtension('security', array(
-        // ...
+    // config/packages/acl.php
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-        'acl' => array(
+    return static function (ContainerConfigurator $container): void {
+        $container->extension('acl', [
             'connection' => 'default',
-        ),
-    ));
+        ]);
+    };
 
 .. note::
 
