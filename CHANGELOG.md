@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+2.5.0
+-----
+
+ * Add support for Symfony 8
+ * Add support for `doctrine/dbal` v4
+
 2.4.0
 -----
 

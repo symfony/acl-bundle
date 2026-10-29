@@ -20,7 +20,7 @@
         "ext-xml": "*",
         "symfony/dependency-injection": "^4.4|^5.0|^6.0|^7.0|^8.0",
         "symfony/http-kernel": "^4.4|^5.0|^6.0|^7.0|^8.0",
-        "symfony/security-acl": "^3.0",
+        "symfony/security-acl": "^3.5",
         "symfony/security-bundle": "^4.4|^5.0|^6.0|^7.0|^8.0"
     },
     "require-dev": {
@@ -46,7 +46,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.x-dev"
+            "dev-main": "2.x-dev"
         }
     }
 }

@@ -14,43 +14,44 @@ jobs:
             SYMFONY_DEPRECATIONS_HELPER: 'max[self]=0'
 
         strategy:
+            fail-fast: false
             matrix:
                 # Test the latest stable release
-                php: [7.2, 7.3, 7.4, 8.0]
-                deps: [stable]
+                php: ['7.2', '7.3', '7.4', '8.0']
+                deps: [highest]
                 symfony: ['^5.0']
                 include:
                     # Test lowest dependencies
-                    - php: 7.2
+                    - php: '7.2'
                       deps: lowest
                       symfony: '^4.4'
 
                     # Test LTS versions
-                    - php: 8.0
-                      deps: stable
+                    - php: '8.0'
+                      deps: highest
                       symfony: '^4.4'
 
                     # Test Symfony 6
-                    - php: 8.1
-                      deps: stable
+                    - php: '8.1'
+                      deps: highest
                       symfony: '^6.0'
 
                     # Test Symfony 7
-                    - php: 8.3
-                      deps: stable
+                    - php: '8.3'
+                      deps: highest
                       symfony: '^7.0'
 
                     # Test latest php/Symfony
-                    - php: 8.4
-                      deps: stable
+                    - php: '8.4'
+                      deps: highest
                       symfony: '^8.0'
 
         steps:
             - name: Checkout code
-              uses: 'actions/checkout@v2'
+              uses: actions/checkout@v5
 
             - name: Install PHP with extensions
-              uses: 'shivammathur/setup-php@2.7.0'
+              uses: shivammathur/setup-php@v2
               with:
                   coverage: none
                   php-version: '${{ matrix.php }}'
@@ -63,7 +64,7 @@ jobs:
               run: 'composer config minimum-stability dev'
 
             - name: Composer install
-              uses: 'ramsey/composer-install@v1'
+              uses: ramsey/composer-install@v3
               with:
                   dependency-versions: '${{ matrix.deps }}'
                   composer-options: '--prefer-dist'
@@ -80,7 +81,7 @@ jobs:
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v5
 
             - name: PHP-CS-Fixer
               uses: docker://oskarstark/php-cs-fixer-ga:3.0.0
